@@ -1,24 +1,23 @@
-import React from "react";
-import Container from "../Container/Container";
+import { IProduct } from "../../types/servers";
 
-function ProductItem() {
+type TProductItem = IProduct;
+
+function ProductItem({title, price , description , image}:TProductItem) {
   return (
-    <div className="flex flex-col rounded shadow-md py-2">
-      <img
-        className="rounded"
-        src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
+    <div className="flex flex-col rounded shadow-md py-2 w-[300px] h-[400px]">
+     <div className="flex justify-center">
+     <img
+        className="rounded w-[150px] h-[200px] object-contain"
+        src={image}
       />
-      <div className="flex justify-between p-3">
-        <h2>عنوان محصول</h2>
-        <span>500 تومان</span>
+     </div>
+      <div className=" p-3 ">
+        <h2 className="line-clamp-2 font-semibold my-3">{title}</h2>
+        <div className="bg-amber-300 text-center rounded py-2">{price} تومان</div>
       </div>
       <div className="line-clamp-3">
         <p className="px-3">
-          بیست سال بعد شما از کارهایی که انجام نداده‌اید ناراحت می‌شوید نه
-          کارهایی که انجام داده‌اید، پس طناب قایق‌تان را از ساحل باز کنید و از
-          ساحل امن خود به سوی آب‌های آزاد برانید و خطر کنید. جستجو کنید، رویا
-          بسازید و کشف کنید.ُ زهرا عاشق رضاست و رضا گاهی خنگ میشود و نمیفهمد و
-          زهرااا عاشقتهههههههه :()
+          {description}
         </p>
       </div>
     </div>

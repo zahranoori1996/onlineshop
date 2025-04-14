@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../../components/Container/Container";
 import { useParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import { getProduct } from "../../services/api";
+import { IProduct } from "../../types/servers";
 
 function Product() {
-  const params = useParams();
+  const  [product,setProduct] = useState<IProduct>()
+  const params = useParams<{id: string}>();
+  useEffect(()=>{
+    getProduct(params.id as string).then(result =>{
+      setProduct(result)
+    })
+  }, [])
   return (
     <div className="py-6 m-6 shadow-md">
       <Container>
@@ -13,7 +21,7 @@ function Product() {
             <div className="w-full">
               <img
                 className="rounded-lg w-full"
-                src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
+                src={product?.image}
               />
             </div>
             <div>
@@ -24,24 +32,10 @@ function Product() {
             </div>
           </div>
           <div className="col-span-8 leading-9">
-            <h2>عنوان محصول : عنبیه چشم </h2>
-            <p>قیمت محصول : 2500 تومان</p>
+            <h2>عنوان محصول : {product?.title} </h2>
+            <p>قیمت محصول : {product?.price} تومان</p>
 
-            <p className="">
-              بیست سال بعد شما از کارهایی که انجام نداده‌اید ناراحت می‌شوید نه
-              کارهایی که انجام داده‌اید، پس طناب قایق‌تان را از ساحل باز کنید و
-              از ساحل امن خود به سوی آب‌های آزاد برانید و خطر کنید. جستجو کنید،
-              رویا بسازید و کشف کنید.ُ زهرا عاشق رضاست و رضا گاهی خنگ میشود و
-              نمیفهمد و زهرااا عاشقتهههههههه :() بیست سال بعد شما از کارهایی که
-              انجام نداده‌اید ناراحت می‌شوید نه کارهایی که انجام داده‌اید، پس
-              طناب قایق‌تان را از ساحل باز کنید و از ساحل امن خود به سوی آب‌های
-              آزاد برانید و خطر کنید. جستجو کنید، رویا بسازید و کشف کنید.ُ زهرا
-              عاشق رضاست و رضا گاهی خنگ میشود و نمیفهمد و زهرااا عاشقتهههههههه
-              :() بیست سال بعد شما از کارهایی که انجام نداده‌اید ناراحت می‌شوید
-              نه کارهایی که انجام داده‌اید، پس طناب قایق‌تان را از ساحل باز کنید
-              و از ساحل امن خود به سوی آب‌های آزاد برانید و خطر کنید. جستجو
-              کنید، رویا بسازید و کشف کنید.ُ زهرا عاشق رضاست و رضا گاهی خنگ
-              میشود و نمیفهمد و زهرااا عاشقتهههههههه :()
+            <p className=""> توضیحات محصول : {product?.description}
             </p>
           </div>
         </div>
