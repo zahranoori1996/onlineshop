@@ -1,9 +1,12 @@
-import React from "react";
+
 import Container from "../../components/Container/Container";
 import CartItem from "../../components/CartItem/CartItem";
 import Button from "../../components/Button/Button";
+import { useShoppingCartContext } from "../../context/ShoppingCartContext";
 
 function Cart() {
+  const {cartItems} = useShoppingCartContext()
+  
   return (
     <div className="my-9">
       <Container>
