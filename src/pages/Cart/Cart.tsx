@@ -11,9 +11,12 @@ function Cart() {
     <div className="my-9">
       <Container>
         <div>
-          <CartItem />
-          <CartItem />
-          <CartItem />
+          {
+            cartItems.map(item =>(
+              <CartItem {...item} />
+            ))
+          }
+      
  
         </div>
         <div className="mt-4 bg-gray-300 p-3 rounded-md">
