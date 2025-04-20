@@ -1,4 +1,4 @@
-import React from "react";
+import iconBuy from "./../../assets/icons/shopping-cart-icon.svg";
 import { Link } from "react-router-dom";
 import Container from "../Container/Container";
 import { useShoppingCartContext } from "../../context/ShoppingCartContext";
@@ -18,6 +18,9 @@ function Navbar() {
             </li>
           </ul>
           <div className="relative">
+           
+           
+            <Link to="/cart">
             {cartQTY !== 0 ? (
               <span className="flex justify-center items-center w-5 h-5 bg-red-500 text-xs text-center text-white font-semibold rounded-full absolute -top-2 -right-4">
                 {cartQTY}
@@ -25,12 +28,8 @@ function Navbar() {
             ) : (
               <span className=""></span>
             )}
-            {/* <span className="flex justify-center items-center w-5 h-5 bg-red-500 text-xs text-center text-white font-semibold rounded-full absolute -top-2 -right-4">
-              {cartQTY !== 0 ? cartQTY : ""}
-            </span> */}
-            <Link to="/cart">
-              <button className="cursor-pointer">سبد خرید
-            
+              <button className="cursor-pointer">
+                <img className="w-6" src={iconBuy} />
               </button>
             </Link>
           </div>
