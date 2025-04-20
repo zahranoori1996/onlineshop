@@ -4,11 +4,21 @@ import Container from "../Container/Container";
 import { useShoppingCartContext } from "../../context/ShoppingCartContext";
 
 function Navbar() {
-  const { cartQTY } = useShoppingCartContext();
+  
+  function toggleLogin(isLogin: boolean){
+    if(!isLogin){
+      console.log("login")
+      handleLogin()
+    }else{
+      console.log("outi")
+      handleLogOut()
+    }
+  }
+  const { cartQTY,isLogin,handleLogOut,handleLogin} = useShoppingCartContext();
   return (
     <div className="flex justify-between shadow h-14 items-center">
       <Container>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <ul className="flex gap-5">
             <li>
               <Link to="/">خانه</Link>
@@ -17,7 +27,7 @@ function Navbar() {
               <Link to="/store">فروشگاه</Link>
             </li>
           </ul>
-          <div className="relative">
+          <div className="relative flex items-center">
            
            
             <Link to="/cart">
@@ -32,6 +42,7 @@ function Navbar() {
                 <img className="w-6" src={iconBuy} />
               </button>
             </Link>
+            <button onClick={()=>toggleLogin(isLogin)} className="cursor-pointer  mr-2">{isLogin ? 'خروج از حساب کاربری' : 'ورود به حساب کاربری'}</button>
           </div>
         </div>
       </Container>
