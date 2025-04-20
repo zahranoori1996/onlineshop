@@ -10,14 +10,20 @@ function Product() {
   const [product, setProduct] = useState<IProduct>();
   const params = useParams<{ id: string }>();
 
-  const { handleIncreaseProductQTY,handleDecreaseProductQTY,cartItems } = useShoppingCartContext();
+  const {
+    handleIncreaseProductQTY,
+    handleDecreaseProductQTY,
+    getProductQTY,
+    handleRemoveProduct,
+    cartItems,
+  } = useShoppingCartContext();
 
   useEffect(() => {
     getProduct(params.id as string).then((result) => {
       setProduct(result);
     });
   }, []);
-console.log(cartItems)
+  console.log(cartItems);
   return (
     <div className="py-6 m-6 shadow-md">
       <Container>
@@ -26,29 +32,51 @@ console.log(cartItems)
             <div className="w-full flex justify-center">
               <img className="rounded-lg w-[150px]" src={product?.image} />
             </div>
-            <div className="flex  gap-3">
-              <Button
-                onClick={() =>
-                  handleIncreaseProductQTY(parseInt(params.id as string))
-                }
-                variant="primary"
-                className=" rounded w-full mt-4 p-2 cursor-pointer "
-              >
-                افزودن به سبد خرید
-              </Button>
-              {
-                cartItems.length > 0 && (
-                  <Button
+            <div className="">
+              {getProductQTY(parseInt(params.id as string)) === 0 ? (
+                <Button
                   onClick={() =>
-                    handleDecreaseProductQTY(parseInt(params.id as string))
+                    handleIncreaseProductQTY(parseInt(params.id as string))
                   }
-                variant="primary"
-                className=" rounded w-full mt-4 p-2 cursor-pointer"
-              >
-                -
-              </Button>
-                )
-              }
+                  variant="primary"
+                  className=" rounded w-full mt-4 p-2 cursor-pointer "
+                >
+                  افزودن به سبد خرید
+                </Button>
+              ) : (
+                <>
+                  <div className="flex items-baseline w-[100%] gap-20">
+                    <Button
+                      onClick={() =>
+                        handleIncreaseProductQTY(parseInt(params.id as string))
+                      }
+                      variant="primary"
+                      className=" rounded w-full mt-4 px-2 py-1 cursor-pointer "
+                    >
+                      +
+                    </Button>
+                    <h4>{getProductQTY(parseInt(params.id as string))}</h4>
+                    <Button
+                      onClick={() =>
+                        handleDecreaseProductQTY(parseInt(params.id as string))
+                      }
+                      variant="danger"
+                      className=" rounded w-full mt-4  px-2 py-1 cursor-pointer"
+                    >
+                      -
+                    </Button>
+                  </div>
+                  <Button
+                    onClick={() =>
+                      handleRemoveProduct(parseInt(params.id as string))
+                    }
+                    variant="warning"
+                    className=" rounded w-full mt-4  px-2 py-1 cursor-pointer"
+                  >
+                    حذف
+                  </Button>
+                </>
+              )}
             </div>
           </div>
           <div className="col-span-8 leading-9">

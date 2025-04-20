@@ -8,8 +8,11 @@ interface CartItem {
 }
 interface ShoppingCartContext {
   cartItems: CartItem[];
-  handleIncreaseProductQTY : (id:number)=> void
-  handleDecreaseProductQTY : (id:number)=> void
+  handleIncreaseProductQTY: (id: number) => void;
+  handleDecreaseProductQTY: (id: number) => void;
+  getProductQTY: (id: number) => number;
+  handleRemoveProduct: (id: number) => void;
+  cartQTY : number
 }
 
 // export const ShoppingCartContext = createContext<ShoppingCartContext>({
@@ -35,9 +38,9 @@ export function ShoppingCartProvider({ children }: ShoppingCartProvider) {
       else {
         return currentItems.map((item) => {
           if (item.id == id) {
-            return {...item, qty: item.qty + 1,};
-          }else{
-            return item
+            return { ...item, qty: item.qty + 1 };
+          } else {
+            return item;
           }
         });
       }
@@ -46,27 +49,45 @@ export function ShoppingCartProvider({ children }: ShoppingCartProvider) {
   const handleDecreaseProductQTY = (id: number) => {
     setCartItems((currentItems) => {
       let selectedItem = currentItems.find((item) => item.id == id);
-      //if delete item 
+      //if delete item
       if (selectedItem?.qty === 1) {
-        return currentItems.filter(item =>item.id !== id);
+        return currentItems.filter((item) => item.id !== id);
       }
       // be products
       else {
         return currentItems.map((item) => {
           if (item.id == id) {
-            return {...item, qty: item.qty - 1,};
-          }else{
-            return item
+            return { ...item, qty: item.qty - 1 };
+          } else {
+            return item;
           }
         });
       }
     });
   };
 
+  const getProductQTY = (id: number) => {
+    return cartItems.find((item) => item.id == id)?.qty || 0;
+  };
 
+  const handleRemoveProduct = (id: number) => {
+    setCartItems((currentItems) =>
+      currentItems.filter((item) => item.id != id)
+    );
+  };
 
+  const cartQTY = cartItems.reduce((totalQTY , item)=> totalQTY + item.qty , 0)
   return (
-    <ShoppingCartContext.Provider value={{ cartItems ,handleIncreaseProductQTY , handleDecreaseProductQTY}}>
+    <ShoppingCartContext.Provider
+      value={{
+        cartItems,
+        handleIncreaseProductQTY,
+        handleDecreaseProductQTY,
+        getProductQTY,
+        handleRemoveProduct,
+        cartQTY
+      }}
+    >
       {children}
     </ShoppingCartContext.Provider>
   );

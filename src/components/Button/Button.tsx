@@ -21,7 +21,7 @@ return (variant === 'primary') ?
 (variant === 'danger') ?
 {backgroundColor : 'red' , color: '#fff'} :
 (variant === 'warning') ?
-{backgroundColor : 'yellow' , color: '#fff'} :
+{backgroundColor : '#d97000' , color: '#fff'} :
 (variant === 'success') ?
 {backgroundColor : 'green' , color: '#fff'} :
 {backgroundColor : 'pink' , color: '#fff'} 
